@@ -5,6 +5,7 @@ class EmployeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Empleado
         fields = (
+            'id',
             'nombre',
             'apellido_paterno',
             'apellido_materno',
