@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Empleado
 from datetime import date
+from dateutil.relativedelta import relativedelta
 
 class EmployeSerializer(serializers.ModelSerializer):
 
@@ -56,16 +57,18 @@ class EmployeSerializer(serializers.ModelSerializer):
 
     def get_fecha_retiro(self, object):
 
-        #Calculamos en que año el empleado tiene 65 años
+        #Calculamos en que año el empleado tiene 65 años y 66 años con 5 meses 
         nacimiento = object.fecha_nacimiento
         fecha_edad_65 = nacimiento.replace(year=nacimiento.year+65)
+        fecha_edad_66 = nacimiento.replace(year=nacimiento.year+66)
+        fecha_edad_66=  fecha_edad_66 + relativedelta(months=5)
 
         #Calculamos en que año el empleado cumple 37 años laborando
         ingreso= object.fecha_ingreso_laboral
         laborando_37_años =  ingreso.replace(year=ingreso.year+37)
 
 
-        #Obtenemos la diferencia de fechas y comparamos
+        #Obtenemos la diferencia de fechas del tiempo laborado contra la edad para jubilarse comparamos
 
         años= ((fecha_edad_65-laborando_37_años).total_seconds()/ (365.242*24*3600))
         añosInt=int(años)
@@ -82,7 +85,7 @@ class EmployeSerializer(serializers.ModelSerializer):
             return fecha_edad_65
 
         else:
-            fecha_edad_66 = nacimiento.replace(year=nacimiento.year+66, month=nacimiento.month+5)
+
             print(fecha_edad_66)
             return fecha_edad_66
 
