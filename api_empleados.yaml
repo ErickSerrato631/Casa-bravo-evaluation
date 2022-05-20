@@ -1,0 +1,205 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  description: En esta API se administran empleados y se calcula su edad, tiempo laborando y fecha de retiro
+  title: API de administración de empleados
+host: '127.0.0.1:8000'
+schemes:
+  - https
+paths:
+  /api/employe/list:
+    get:
+      produces:
+        - application/json
+
+      responses:
+        '200':
+          description: Success|OK
+          schema:
+            $ref: '#/definitions/DatosEmpleados'
+      tags:
+        - Comercio
+      operationId: listarEmpleados
+      summary: Entrega el registro de todos los empleados
+      
+  /api/employe/create:
+    post:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/DatosEmpleados2'
+      responses:
+        '201':
+          description: Created
+          schema:
+            $ref: '#/definitions/DatosEmpleados'
+        '400':
+          description: Bad Request
+          examples:
+            application/json:
+              field: This field may not be blank.
+      tags:
+        - Comercio
+      operationId: registarEmpleado
+      summary: Registra un empleado
+      
+
+  '/api/employe/update/{id}':
+    put:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/DatosEmpleados2'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/DatosEmpleados'
+        '400':
+          description: Not found
+          examples:
+            application/json:
+              detail: Not found.
+      tags:
+        - Comercio
+      operationId: altaArchivoComercio
+      summary: Asocia un archivo a un comercio
+      
+      
+      
+      
+
+  '/api/employe/delete/{id}':
+    delete:
+      consumes:
+        - application/json
+      produces:
+        - application/json
+        
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: string
+
+      responses:
+        '200':
+          description: Deleted
+          examples:
+            application/json:
+              message: delete.
+          
+        '400':
+          description: Not found
+          examples:
+            application/json:
+              detail: Not found.
+
+
+      tags:
+        - Comercio
+      operationId: delArchivoComercio
+      summary: Asocia un archivo a un comercio
+ 
+definitions:
+  DatosEmpleados:
+    properties:
+      id:
+        example: 1
+        type: integer
+        
+      nombre:
+        example: Erick 
+        type: string        
+        
+      apellido_paterno:
+        example: Serrato Garcia
+        type: string        
+
+      apellido_materno:
+        example: Garcia
+        type: string       
+
+      fecha_nacimiento:
+        example: 1994/03/10
+        type: string       
+        
+      edad:
+        example: 28 años, 2 meses y 10 días
+        type: string
+        
+      fecha_ingreso_laboral:
+        example: 2010/11/11
+        type: string
+        
+      tiempo_laboral:
+        example: 11 años, 6 meses y 7 días
+        type: string
+
+      fecha_retiro:
+        example: 2059/03/10
+        
+        type: string
+
+  DatosEmpleados2:
+    properties:
+      id:
+        example: 1
+        type: integer
+        
+      nombre:
+        example: Erick 
+        type: string        
+        
+      apellido_paterno:
+        example: Serrato Garcia
+        type: string        
+
+      apellido_materno:
+        example: Garcia
+        type: string       
+
+      fecha_nacimiento:
+        example: 1994/03/10
+        type: string       
+
+      fecha_ingreso_laboral:
+        example: 2010/11/11
+        type: string
+
+        
+        
+        
+    required:
+      - id
+      - nombre
+      - apellido_paterno
+      - apellido_materno
+      - fecha_nacimiento
+      - fecha_ingreso_laboral
+      
+    type: object
+
+x-components: {}
+
+
+
+
+
+
